@@ -1,0 +1,33 @@
+---
+import type { GetStaticPaths } from "astro";
+import { siteConfig } from "@config/site-config";
+import MainLayout from "@layouts/MainLayout.astro";
+import AuthorCard from '@components/AuthorCard.astro'
+import { getCollection } from "astro:content";
+import Author from "@pages/blog/[author].astro";
+
+
+
+    const authors = await getCollection('author');
+
+    // console.log(authors[0])
+  
+
+---
+
+<MainLayout>
+  <section class="container px-6 py-10 mx-auto">
+    <button onclick="history.back()" class="hover:underline">Regresar</button>
+    <h1 class="text-3xl font-semibold capitalize lg:text-4xl text-white">
+      {siteConfig.title}
+    </h1>
+  </section>
+
+  <section class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+
+    {
+        authors.map(author=> <AuthorCard author={author}/>)
+    }
+  
+  </section>
+</MainLayout>

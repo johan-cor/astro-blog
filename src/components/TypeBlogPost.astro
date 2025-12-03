@@ -1,0 +1,38 @@
+---
+import {Formatter} from '@utils/formatter.ts'
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    // de esta forma tipamos las propiedades del componente que vienen de la entrada adicional se le pasa el nombre de la collection que se creo
+    post: CollectionEntry<"blog">;
+}
+
+
+const {post} = Astro.props;
+const frontmatter = post.data;
+// console.log(frontmatter)
+---
+
+<div class="lg:flex">
+  <Image
+    class="object-cover w-full h-56 rounded-lg lg:w-64"
+    src={frontmatter.image}
+    alt={frontmatter.title}
+    width='1000'
+    height='200'
+  />
+
+  <div class="flex flex-col justify-between py-6 lg:mx-6">
+    <a
+      href={`/posts/${post.slug}`}
+      class="text-xl text-blue-50 font-semibold hover:underline "
+    >
+      {frontmatter.description }
+    </a>
+
+    <span class="text-sm  text-gray-300"
+      >{Formatter.formatDate(frontmatter.date)}</span
+    >
+  </div>
+</div>
